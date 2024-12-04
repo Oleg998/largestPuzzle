@@ -37,29 +37,44 @@ function findLongestSequence(arr) {
 
     dfs(startFragment, remainingFragments);
   }
-
   return maxSequence;
 }
 
 document.querySelector('.form').addEventListener('submit', function (event) {
   event.preventDefault();
+
   const text = document.querySelector('#usertext').value;
   const textContainer = document.querySelector('#textContainer');
+  const loader = document.querySelector('#loader');
+  const form = document.querySelector('.form'); 
+
   if (text) {
     const fragments = text.split(/[\s,]+/).map(num => num.trim());
     if (fragments.length > 1) {
-      const largestPuzzle = findLongestSequence(fragments);
-      textContainer.textContent = `Найбільша послідовність: ${largestPuzzle}`;
+      textContainer.textContent = '';
+      loader.style.display = 'block'; 
+      setTimeout(() => {
+        try {
+          const largestPuzzle = findLongestSequence(fragments);
+          loader.style.display = 'none'; 
+          textContainer.textContent = `Найбільша послідовність: ${largestPuzzle}`;
+        } catch (error) {
+          loader.style.display = 'none';
+          textContainer.textContent = 'Сталася помилка під час обчислення.';
+          console.error('Помилка:', error);
+        }
+      }, 0);
     } else {
       textContainer.textContent = 'Введіть принаймні два числа.';
     }
   } else {
     textContainer.textContent = 'Будь ласка, введіть числа.';
   }
-  form.reset();
+
+  form.reset(); 
 });
 
 const clearBtn = document.querySelector('.clear-button');
 clearBtn.addEventListener('click', function () {
-  textContainer.textContent = '';
+  document.querySelector('#textContainer').textContent = '';
 });
