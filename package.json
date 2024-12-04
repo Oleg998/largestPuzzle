@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/drag_and_drop/",
+    "build": "vite build --base=/largestPuzzle/",
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "netlify deploy -p"
